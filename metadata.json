@@ -1,0 +1,6 @@
+{
+  "name": "MediBridge",
+  "description": "AI-powered medicine donation and redistribution platform connecting donors with verified NGOs and legal pharmacies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

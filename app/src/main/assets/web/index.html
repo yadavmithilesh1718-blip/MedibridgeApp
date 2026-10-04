@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MediBridge - Healthcare Redistribution Platform (Web & Mobile)</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d9488">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- FLIPKART / AMAZON STYLE HEADER -->
+  <header class="navbar">
+    <!-- Top Row: Logo, Deliver To, Search Bar, Account & Tracker, Basket -->
+    <div class="nav-container main-nav-row">
+      <div class="brand" onclick="switchTab('home')" style="cursor: pointer;">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2v20M2 12h20M7 7l10 10M17 7L7 17" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">MediBridge</span>
+          <span class="brand-badge">WEB & APP ECOSYSTEM</span>
+        </div>
+      </div>
+
+      <!-- Deliver To Location Widget (Like Amazon/Flipkart) -->
+      <div class="location-widget" onclick="alert('Location set to: Metro Health District (Delivery Zone 4)')">
+        <span class="loc-pin">📍</span>
+        <div class="loc-text">
+          <span class="loc-label">Redistribute To</span>
+          <strong class="loc-city">Central District 10001</strong>
+        </div>
+      </div>
+
+      <!-- Universal Search Bar (Like Amazon/Flipkart) -->
+      <div class="search-bar-container">
+        <select id="search-category" class="search-cat-select" onchange="filterMedicinesLive()">
+          <option value="ALL">All Categories</option>
+          <option value="Antibiotics">Antibiotics</option>
+          <option value="Chronic Care">Chronic Care</option>
+          <option value="Respiratory">Respiratory</option>
+          <option value="Cardiovascular">Cardio</option>
+        </select>
+        <input type="text" id="universal-search-input" class="search-input" placeholder="Search medicines, salts, urgent NGO requests, or batch..." onkeyup="filterMedicinesLive()">
+        <button class="search-btn" onclick="filterMedicinesLive()" title="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Nav Actions: Live Tracker, Basket, App Link -->
+      <div class="nav-actions">
+        <button class="btn btn-outline" onclick="switchTab('tracker')" title="Live Geographic Courier Tracking">
+          <span>🚚</span> Live Tracker
+        </button>
+        <button class="btn btn-primary" onclick="switchTab('donate')">
+          <span>+</span> Donate Medicine
+        </button>
+        <div class="basket-badge-btn" onclick="switchTab('tracker')" title="View Active Donations Basket">
+          <span class="basket-icon">📦</span>
+          <span class="basket-count" id="active-donations-badge">4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Sub-Nav Bar (Like Amazon 'All Categories' row) -->
+    <div class="sub-navbar">
+      <div class="sub-nav-container">
+        <a href="#home" class="sub-nav-item active" onclick="switchTab('home')">🏠 Home</a>
+        <a href="#donate" class="sub-nav-item" onclick="switchTab('donate')">💊 Donate Medicine</a>
+        <a href="#tracker" class="sub-nav-item" onclick="switchTab('tracker')">🗺️ Real-time Map Tracker</a>
+        <a href="#partners" class="sub-nav-item" onclick="switchTab('partners')">🏥 Verified NGOs</a>
+        <a href="#impact" class="sub-nav-item" onclick="switchTab('impact')">📊 Impact Dashboard</a>
+        <a href="#ecosystem" class="sub-nav-item highlight" onclick="openEcosystemModal()">📱 Web + Android App Details</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <!-- DUAL PLATFORM ANNOUNCEMENT BANNER -->
+    <div class="ecosystem-banner">
+      <div class="ecosystem-banner-content">
+        <div class="eco-badge">MULTI-DEVICE PLATFORM ARCHITECTURE</div>
+        <h3>One Platform. Two Seamless Experiences — Just Like Flipkart & Amazon.</h3>
+        <p>Access MediBridge on any desktop/laptop web browser, or run the native Android mobile app on smartphones and tablets with unified data synchronization.</p>
+      </div>
+      <div class="ecosystem-buttons">
+        <button class="btn btn-sm btn-outline-white" onclick="openEcosystemModal()">Learn How It Works</button>
+        <button class="btn btn-sm btn-white" onclick="openInstallPwaGuide()">Install Web App (PWA)</button>
+      </div>
+    </div>
+    
+    <!-- SECTION 1: HOME DASHBOARD -->
+    <section id="section-home" class="page-section active">
+      <div class="hero-banner">
+        <div class="hero-content">
+          <div class="pill-badge">CROSS-PLATFORM REDISTRIBUTION</div>
+          <h1>Connecting Surplus Medicines to Verified Clinics & Patients</h1>
+          <p>An intelligent platform saving unexpired medicines from landfill disposal and redistributing them to certified NGOs and legal pharmacies across all devices.</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary btn-lg" onclick="switchTab('donate')">Donate Unused Medicine</button>
+            <button class="btn btn-secondary btn-lg" onclick="switchTab('partners')">Explore Verified NGOs</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Impact Counters -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon teal">💊</div>
+          <div class="stat-info">
+            <h3 id="stat-medicines-count">140+</h3>
+            <p>Medicines Saved</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon sky">💰</div>
+          <div class="stat-info">
+            <h3 id="stat-value-saved">$1,280</h3>
+            <p>Diverted Value</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon emerald">❤️</div>
+          <div class="stat-info">
+            <h3 id="stat-patients-count">350+</h3>
+            <p>Patients Helped</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">🏥</div>
+          <div class="stat-info">
+            <h3 id="stat-ngos-count">4 Partners</h3>
+            <p>Verified Network</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expiry Warning -->
+      <div class="alert-box warning-box" id="home-expiry-alert">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-body">
+          <h4>Expiry Horizon Alert (Shelf-Life &lt; 90 Days)</h4>
+          <p>2 medicine batches nearing expiration. Priority matching recommended to ensure safe utilization.</p>
+        </div>
+        <button class="btn btn-sm btn-outline-warning" onclick="switchTab('tracker')">View Batches</button>
+      </div>
+
+      <!-- Urgent Requests Grid -->
+      <div class="section-header">
+        <div>
+          <h2>Urgent Clinic Requests</h2>
+          <p class="subtitle">Prioritized medical supplies requested by low-income clinics</p>
+        </div>
+        <button class="btn btn-sm btn-link" onclick="switchTab('partners')">View All Requests &rarr;</button>
+      </div>
+      <div class="cards-grid" id="urgent-requests-container">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- SECTION 2: DONATE & AI OCR -->
+    <section id="section-donate" class="page-section">
+      <div class="section-header">
+        <div>
+          <h2>Donate Medicine & AI Verification</h2>
+          <p class="subtitle">Upload package details, run AI OCR verification, and auto-match with nearby clinics</p>
+        </div>
+      </div>
+
+      <!-- 1-Tap Presets -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="icon">✨</span>
+          <h3>Quick-Test Presets (1-Tap Autofill)</h3>
+        </div>
+        <div class="presets-row">
+          <button class="preset-pill" onclick="applyPreset('amox')">Amoxicillin 500mg Strip</button>
+          <button class="preset-pill" onclick="applyPreset('metformin')">Metformin 850mg Bottle</button>
+          <button class="preset-pill" onclick="applyPreset('salbutamol')">Salbutamol Inhaler</button>
+          <button class="preset-pill" onclick="applyPreset('paracetamol')">Paracetamol 650mg Blister</button>
+          <button class="preset-pill" onclick="applyPreset('insulin')">Insulin Glargine Pen</button>
+        </div>
+      </div>
+
+      <!-- AI Inspection & Input Form -->
+      <div class="donate-layout">
+        <div class="form-card">
+          <h3>Medicine Specifications</h3>
+          <form id="donation-form" onsubmit="handleDonationSubmit(event)">
+            <div class="form-group">
+              <label>Medicine Name & Strength</label>
+              <input type="text" id="med-name" required placeholder="e.g. Amoxicillin Trihydrate 500mg">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Category</label>
+                <select id="med-category">
+                  <option value="Antibiotics">Antibiotics</option>
+                  <option value="Chronic Care">Chronic Care (Diabetes/BP)</option>
+                  <option value="Pain Relief">Pain Relief / Analgesic</option>
+                  <option value="Respiratory">Respiratory & Asthma</option>
+                  <option value="Cardiovascular">Cardiovascular</option>
+                  <option value="Pediatric">Pediatric Syrups</option>
+                  <option value="Vitamins">Vitamins & Supplements</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Dosage</label>
+                <input type="text" id="med-dosage" placeholder="e.g. 500mg">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" id="med-qty" min="1" value="10" required>
+              </div>
+              <div class="form-group">
+                <label>Packaging Unit</label>
+                <select id="med-unit">
+                  <option value="Strips">Strips</option>
+                  <option value="Tablets">Tablets</option>
+                  <option value="Bottles">Bottles</option>
+                  <option value="Canisters">Canisters</option>
+                  <option value="Pens">Pens</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="date" id="med-expiry" required>
+              </div>
+              <div class="form-group">
+                <label>Batch / Lot #</label>
+                <input type="text" id="med-batch" required placeholder="e.g. AMX-89301">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Packaging Condition</label>
+                <select id="med-condition">
+                  <option value="Intact Blister Strip">Intact Blister Strip</option>
+                  <option value="Unopened Sealed Box">Unopened Sealed Box</option>
+                  <option value="Original Bottle Sealed">Original Bottle Sealed</option>
+                  <option value="Partially Opened">Partially Opened (Flagged)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Storage Condition</label>
+                <select id="med-storage">
+                  <option value="Room Temperature (15-25°C)">Room Temperature (15-25°C)</option>
+                  <option value="Refrigerated (2-8°C)">Refrigerated (2-8°C)</option>
+                  <option value="Cool & Dry Place">Cool & Dry Place</option>
+                </select>
+              </div>
+            </div>
+
+            <hr class="form-divider">
+
+            <h3>Donor Contact</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Donor Full Name</label>
+                <input type="text" id="donor-name" required value="Community Health Donor">
+              </div>
+              <div class="form-group">
+                <label>Contact Phone</label>
+                <input type="tel" id="donor-phone" required value="+1 (555) 789-0123">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Pickup Location / Address</label>
+              <input type="text" id="donor-address" required value="500 Medical Center Way, Suite 100">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-donation">
+              Verify with AI & Submit Donation
+            </button>
+          </form>
+        </div>
+
+        <!-- AI Verification Sidecard -->
+        <div class="ai-panel">
+          <div class="ai-box">
+            <div class="ai-header">
+              <div class="ai-badge">AI SAFETY INSPECTION</div>
+              <span class="ai-score" id="ai-score-display">98% Safety Score</span>
+            </div>
+            <h4 id="ai-inspection-title">Packaging Seal & Expiry Validated</h4>
+            <p id="ai-inspection-body">
+              Verified batch AMX-89301 against regulatory blacklists. Expiry horizon &gt; 12 months. Suitable for charitable redistribution under WHO guidelines.
+            </p>
+            <div class="ai-checklist">
+              <div class="check-item"><span class="check-icon">✓</span> Blister foil & tamper ring intact</div>
+              <div class="check-item"><span class="check-icon">✓</span> Minimum 60-day shelf life remaining</div>
+              <div class="check-item"><span class="check-icon">✓</span> Non-narcotic prescription/OTC medicine</div>
+            </div>
+          </div>
+
+          <div class="matching-preview">
+            <h4>Recommended Matched Recipient</h4>
+            <div class="matched-org-card" id="matched-preview-card">
+              <div class="org-avatar">🏥</div>
+              <div class="org-details">
+                <h5 id="matched-org-name">Hope Health Foundation NGO</h5>
+                <p id="matched-org-sub">Verified NGO • 2.4 km away</p>
+                <span class="match-badge">98% Priority Match</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: RECIPIENT ORGANIZATIONS -->
+    <section id="section-partners" class="page-section">
+      <div class="section-header">
+        <div>
+          <h2>Verified Recipient Partners</h2>
+          <p class="subtitle">Legally registered NGOs, free community health clinics, and charitable pharmacies</p>
+        </div>
+        <div class="filter-group">
+          <button class="filter-btn active" onclick="filterPartners('ALL')">All Partners</button>
+          <button class="filter-btn" onclick="filterPartners('NGO')">NGOs</button>
+          <button class="filter-btn" onclick="filterPartners('Clinic')">Clinics</button>
+          <button class="filter-btn" onclick="filterPartners('Pharmacy')">Pharmacies</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="partners-container">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- SECTION 4: LIVE TRACKER -->
+    <section id="section-tracker" class="page-section">
+      <div class="section-header">
+        <div>
+          <h2>Medicine Donation Tracker</h2>
+          <p class="subtitle">Real-time status updates through verification, pickup, and redistribution</p>
+        </div>
+      </div>
+      <div class="tracker-list" id="tracker-container">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- SECTION 5: IMPACT & GUIDELINES -->
+    <section id="section-impact" class="page-section">
+      <div class="section-header">
+        <div>
+          <h2>Environmental & Social Impact</h2>
+          <p class="subtitle">Measurable reduction of pharmaceutical waste and healthcare inequity</p>
+        </div>
+      </div>
+      <div class="impact-cards-row">
+        <div class="impact-box">
+          <h3>Landfill Chemical Diversion</h3>
+          <p class="big-metric">48 kg</p>
+          <p class="desc">Active pharmaceutical compounds prevented from soil & groundwater contamination.</p>
+        </div>
+        <div class="impact-box">
+          <h3>Carbon Footprint Abated</h3>
+          <p class="big-metric">142 kg CO₂e</p>
+          <p class="desc">Avoided incinerator emissions and unnecessary duplicate manufacturing.</p>
+        </div>
+        <div class="impact-box">
+          <h3>Redistribution Safety Rate</h3>
+          <p class="big-metric">100%</p>
+          <p class="desc">Every donation inspected through AI OCR batch validation and registered pharmacists.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ECOSYSTEM MODAL (Just like Flipkart & Amazon) -->
+  <div id="ecosystem-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.6rem;">📱💻</span>
+          <div>
+            <h3 style="font-size: 1.2rem; font-weight: 800;">Web & Mobile Dual Ecosystem</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">How MediBridge operates across Web and Android like Amazon & Flipkart</p>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeEcosystemModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 16px 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+          <!-- Card 1: Web App -->
+          <div style="background: var(--surface-alt); padding: 16px; border-radius: 12px; border-left: 4px solid var(--primary);">
+            <h4 style="font-weight: 800; color: var(--primary); margin-bottom: 6px;">🌐 1. Web Application</h4>
+            <ul style="font-size: 0.85rem; color: var(--text-main); line-height: 1.6; padding-left: 18px;">
+              <li>Runs in <strong>any browser</strong> (Chrome, Safari, Edge, Firefox).</li>
+              <li>Optimized for desktop computers, hospital workstations & tablets.</li>
+              <li>PWA support: Can be installed as a standalone app with 1 click.</li>
+              <li>Zero download required for donors & clinic staff.</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Mobile App -->
+          <div style="background: var(--surface-alt); padding: 16px; border-radius: 12px; border-left: 4px solid var(--secondary);">
+            <h4 style="font-weight: 800; color: var(--secondary); margin-bottom: 6px;">📱 2. Native Mobile App</h4>
+            <ul style="font-size: 0.85rem; color: var(--text-main); line-height: 1.6; padding-left: 18px;">
+              <li>Built with <strong>Kotlin & Jetpack Compose</strong>.</li>
+              <li>Native camera hardware integration for instant AI OCR packaging scan.</li>
+              <li>Push notifications for urgent clinic match requests.</li>
+              <li>Offline Room SQLite database persistence.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background: #0f172a; color: white; padding: 14px; border-radius: 12px; margin-bottom: 16px;">
+          <h5 style="color: #38bdf8; font-weight: 700; margin-bottom: 6px;">🚀 How to Deploy Web Version to Cloud (Vercel / Firebase / Netlify)</h5>
+          <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 8px;">The files in <code>app/src/main/assets/web/</code> are 100% standard HTML5/CSS/JS. Deploy them with one command:</p>
+          <pre style="background: #1e293b; padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; color: #a7f3d0; overflow-x: auto;">
+# Option 1: Test locally in terminal
+npx serve app/src/main/assets/web
+
+# Option 2: Deploy to Vercel
+npx vercel app/src/main/assets/web
+
+# Option 3: Deploy to Firebase Hosting
+firebase deploy --only hosting
+          </pre>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button class="btn btn-outline" onclick="closeEcosystemModal()">Close</button>
+          <button class="btn btn-primary" onclick="exportDataJson()">Export All Data (JSON)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2026 MediBridge Platform. Cross-Device Healthcare Technology.</p>
+      <p>Compatible with Mobile, Tablet, Desktop, Chromebook, and Web Browsers.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
